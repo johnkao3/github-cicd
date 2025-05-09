@@ -1,0 +1,38 @@
+name: Flutter Desktop Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  for-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+      - name: Install dependencies
+        run: |
+          cd ci_cd
+          flutter pub get
+      - name: Enable windows build
+        run: |
+          cd ci_cd
+          flutter config --enable-windows-desktop
+      - name: Build artifacts
+        run: |
+          cd ci_cd
+          flutter build windows --release
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: "zip"
+          filename: test-${{github.ref_name}}-windows.zip
+          directory: ci_cd/build/windows/runner/Release
+      - name: Windows Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{github.ref_name}}
+          files: ci_cd/build/windows/runner/Release/test-${{github.ref_name}}-windows.zip
