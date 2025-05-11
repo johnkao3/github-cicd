@@ -35,4 +35,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{github.ref_name}}
-          files: ci_cd/build/windows/runner/Release/test-${{github.ref_name}}-windows.zip
+          files: ci_cd/build/windows/x64/runner/Release/test-${{github.ref_name}}-windows.zip
