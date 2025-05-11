@@ -28,7 +28,7 @@ jobs:
         with:
           type: "zip"
           filename: test-${{github.ref_name}}-windows.zip
-          directory: ci_cd/build/windows/runner/Release
+          directory: ci_cd/build/windows/x64/runner/Release
       - name: Windows Release
         uses: softprops/action-gh-release@v2
         env:
